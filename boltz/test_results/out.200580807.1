@@ -1,0 +1,86 @@
+Sender: LSF System <lsfadmin@lg03a03>
+Subject: Job 200580807[1]: <HER2[1-10]> in cluster <chimera> Done
+
+Job <HER2[1-10]> was submitted from host <li04e02> by user <cheny69> in cluster <chimera> at Sun Sep  7 08:57:44 2025
+Job was executed on host(s) <lg03a03>, in queue <gpu>, as user <cheny69> in cluster <chimera> at Sun Sep  7 08:57:44 2025
+</hpc/users/cheny69> was used as the home directory.
+</sc/arion/work/cheny69> was used as the working directory.
+Started at Sun Sep  7 08:57:44 2025
+Terminated at Sun Sep  7 08:58:24 2025
+Results reported at Sun Sep  7 08:58:24 2025
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/bash
+#BSUB -P acc_DiseaseGeneCell
+#BSUB -J HER2[1-10]
+#BSUB -q gpu
+#BSUB -R rusage[mem=20000]
+#BSUB -R span[hosts=1]
+#BSUB -gpu num=1
+#BSUB -n 1
+#BSUB -W 24:00
+#BSUB -L /bin/bash
+#BSUB -o out.%J.%I
+#BSUB -e err.%J.%I
+
+WKDIR="/sc/arion/work/cheny69"
+
+module purge
+module load anaconda3/2024.06
+source ~/.bashrc
+conda activate boltz84
+
+# Use LSB_JOBINDEX as seed
+SEED=$LSB_JOBINDEX
+
+# Create and enter a per-job working directory
+JOBDIR=$WKDIR/results/$SEED
+rm -rf "$JOBDIR"
+mkdir -p "$JOBDIR"
+cd "$JOBDIR"
+
+echo "[$(date)] Running boltz predict with SEED=$SEED in $JOBDIR"
+boltz predict "$WKDIR/prot.yaml" \
+    --use_msa_server \
+    --cache "$WKDIR/mol/" \
+    --seed "$SEED"
+
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   11.00 sec.
+    Max Memory :                                 496 MB
+    Average Memory :                             416.77 MB
+    Total Requested Memory :                     20000.00 MB
+    Delta Memory :                               19504.00 MB
+    Max Swap :                                   -
+    Max Processes :                              5
+    Max Threads :                                8
+    Run time :                                   40 sec.
+    Turnaround time :                            40 sec.
+
+The output (if any) follows:
+
+[Sun Sep  7 08:57:49 EDT 2025] Running boltz predict with SEED=1 in /sc/arion/work/cheny69/results/1
+MSA server enabled: https://api.colabfold.com
+MSA server authentication: no credentials provided
+Checking input data.
+Processing 1 inputs with 1 threads.
+Generating MSA for /sc/arion/work/cheny69/prot.yaml with 1 protein entities.
+Calling MSA server for target prot with 1 sequences
+MSA server URL: https://api.colabfold.com
+MSA pairing strategy: greedy
+No authentication provided for MSA server
+Failed to process /sc/arion/work/cheny69/prot.yaml. Skipping. Error: Too many failed attempts for the MSA generation request..
+
+
+PS:
+
+Read file <err.200580807.1> for stderr output of this job.
+
