@@ -77,3 +77,36 @@
 
 
 > refer to [Boltz github](https://github.com/jwohlwend/boltz) (especially the [prediction.md](https://github.com/jwohlwend/boltz/blob/cb04aeccdd480fd4db707f0bbafde538397fa2ac/docs/prediction.md#L4)) and [LSF_HowToWrite](https://labs.icahn.mssm.edu/minervalab/documentation/lsf-job-scheduler/). Also refer to [GPU_instruction](https://labs.icahn.mssm.edu/minervalab/documentation/gpgpu/) and [Conda_instruction](https://labs.icahn.mssm.edu/minervalab/documentation/conda/) for minerva.
+
+## More
+
+### Example file for batch mode
+
+    #!/bin/bash
+    #BSUB -P acc_DiseaseGeneCell
+    #BSUB -J HER2[1-10]          # run 10 array jobs, index = 1..10
+    #BSUB -q gpu
+    #BSUB -R rusage[mem=20000]
+    #BSUB -R span[hosts=1]
+    #BSUB -gpu num=1
+    #BSUB -n 1
+    #BSUB -W 24:00
+    #BSUB -L /bin/bash
+    #BSUB -o out.%J.%I
+    #BSUB -e err.%J.%I
+
+    # Use LSB_JOBINDEX as seed (1–10)
+    SEED=$LSB_JOBINDEX
+    WKDIR="/sc/arion/work/cheny69"
+
+    module purge
+    module load anaconda3/2024.06
+    source ~/.bashrc
+    conda activate boltz0929
+    ml proxies/1
+
+    boltz predict $WKDIR/prot.yaml \
+        --out_dir $WKDIR/results/$SEED/ \
+        --use_msa_server \
+        --cache $WKDIR/mol/ \
+        --seed $SEED 
