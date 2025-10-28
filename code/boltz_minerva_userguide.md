@@ -6,7 +6,7 @@
 
 ### useful switch between home and work
 
-    cd ../../../../hpc/users/cheny69
+    cd ../../../../hpc/users/(your_username)
     cd ../../../sc/arion/work/(your_username)/
 
 ### Under hpc/users/(your_username)
