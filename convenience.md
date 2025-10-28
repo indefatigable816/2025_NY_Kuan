@@ -109,3 +109,31 @@
         --use_msa_server \
         --cache $WKDIR/mol/ \
         --seed $SEED 
+
+### GIT
+
+    ssh cheny69@minerva.hpc.mssm.edu
+    scp -r project/boltz/ cheny69@minerva.hpc.mssm.edu:/sc/arion/work/cheny69/boltz/
+    conda env list
+    scp -r cheny69@minerva.hpc.mssm.edu:/sc/arion/work/cheny69/results/ .
+    out.200463721.0
+    err.200463728.1
+    # build venv for running boltz
+    conda create -n boltz929 python=3.12
+    conda activate boltz929
+    pip install "torch>=2.2" "numpy>=1.26,<2.0" "hydra-core==1.3.2" "pytorch-lightning==2.5.0" "rdkit>=2024.3.2" "dm-tree==0.1.8" "requests==2.32.3" "pandas>=2.2.2" "types-requests" "einops==0.8.0" "einx==0.3.0" "fairscale==0.4.13" "mashumaro==3.14" "modelcif==1.2" "wandb==0.18.7" "click==8.1.7" "pyyaml==6.0.2" "biopython==1.84" "scipy==1.13.1" "numba==0.61.0" "gemmi==0.6.5" "scikit-learn==1.6.1" "chembl_structure_pipeline==1.2.2"
+    pip install boltz[cuda] -U
+    # go to work
+    cd ../../../sc/arion/work/cheny69/
+    # git commands
+    git init
+    git add .
+    git config --global user.email "ind.."
+    git config --global user.name "inde..."
+    git commit -m "first commit"
+    git branch -M main
+    git push -u origin main
+    git pull origin main
+    # resolve any conflicts
+    git push origin main
+
