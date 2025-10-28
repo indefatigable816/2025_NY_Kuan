@@ -1,15 +1,15 @@
 # Boltz x Minerva user guide
-> Please replace **(your_username)** **(test-env)** with yours
+> Please replace **cheny69** **boltz0929** with yours
 
 ## Before running
 >- get added into a Project to line up for gpu (BSUB -P <project_name>)
 
 ### useful switch between home and work
 
-    cd ../../../../hpc/users/(your_username)
-    cd ../../../sc/arion/work/(your_username)/
+    cd ../../../../hpc/users/cheny69
+    cd ../../../sc/arion/work/cheny69/
 
-### Under hpc/users/(your_username)
+### Under hpc/users/cheny69
 
 #### set up configuration for venv
 
@@ -19,16 +19,16 @@
 #### paste the lines below so that venv is build in sc/arion/work
 
     envs_dirs: 
-    - /sc/arion/work/(your_username)/(test-env)/envs 
+    - /sc/arion/work/cheny69/boltz0929/envs 
     pkgs_dirs: 
-    - /sc/arion/work/(your_username)/(test-env)/pkgs
+    - /sc/arion/work/cheny69/boltz0929/pkgs
 
-### Under sc/arion/work/(your_username)
+### Under sc/arion/work/cheny69
 
 #### set up venv 
 
-    conda create -n (test-env) python=3.12
-    conda activate (test-env)
+    conda create -n boltz0929 python=3.12
+    conda activate boltz0929
 
 #### to check your environment location
 
@@ -36,7 +36,7 @@
 
 #### prepare dependencies
 
-    conda activate (test-env)
+    conda activate boltz0929
     pip install "torch>=2.2" "numpy>=1.26,<2.0" "hydra-core==1.3.2" "pytorch-lightning==2.5.0" "rdkit>=2024.3.2" "dm-tree==0.1.8" "requests==2.32.3" "pandas>=2.2.2" "types-requests" "einops==0.8.0" "einx==0.3.0" "fairscale==0.4.13" "mashumaro==3.14" "modelcif==1.2" "wandb==0.18.7" "click==8.1.7" "pyyaml==6.0.2" "biopython==1.84" "scipy==1.13.1" "numba==0.61.0" "gemmi==0.6.5" "scikit-learn==1.6.1" "chembl_structure_pipeline==1.2.2" "boltz[cuda]" -U "lightning[extra]==2.5.0.post0"
 
 ## While running
