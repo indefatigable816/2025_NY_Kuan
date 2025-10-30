@@ -134,6 +134,13 @@
     git branch -M main
     git push -u origin main
     git pull origin main
+
+### Minerva
+
+[VPN](https://mshmsvpn.mssm.edu/vdesk/hangup.php3)
+[Conda](https://labs.icahn.mssm.edu/minervalab/documentation/conda/)
+[GPU](https://labs.icahn.mssm.edu/minervalab/documentation/gpgpu/)
+[LSF](https://labs.icahn.mssm.edu/minervalab/documentation/lsf-job-scheduler/)
     # resolve any conflicts
     git push origin main
 
