@@ -8,6 +8,11 @@
 
     cd ../../../../hpc/users/cheny69
     cd ../../../sc/arion/work/cheny69/
+    find . -type f \( -name '*_model_*.cif' -o -name 'confidence_*.json' -o -name 'plddt_*.npz' -o -name 'pae_*.npz' -o -name '*_*.csv' \) -print0 | tar --null -czf results_needed.tar.gz --files-from=-
+    scp cheny69@minerva.hpc.mssm.edu:/sc/arion/work/cheny69/1109/results/results_needed.tar.gz .
+    tar -xzf results_needed.tar.gz
+
+
 
 ### Under hpc/users/cheny69
 
