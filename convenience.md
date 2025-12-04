@@ -139,6 +139,9 @@
     git branch -M main
     git push -u origin main
     git pull origin main
+    # List files larger than 50MB
+    Get-ChildItem -Recurse | Where-Object { $_.Length -gt 50MB } | Select-Object FullName, Length
+
 
 ### Minerva
 
