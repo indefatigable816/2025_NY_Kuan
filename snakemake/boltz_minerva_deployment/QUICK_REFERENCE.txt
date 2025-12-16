@@ -1,0 +1,169 @@
+# QUICK REFERENCE CARD
+
+## 3 Commands to Run Everything
+
+### 1️⃣ TRANSFER TO MINERVA (Local PowerShell)
+```
+scp -r C:\Users\indef\Documents\NY\project\snakemake\boltz_minerva_deployment cheny69@minerva.hpc.mssm.edu:/sc/arion/work/cheny69/
+```
+
+### 2️⃣ PREPARE FILES (Minerva SSH)
+```
+cd /sc/arion/work/cheny69/boltz_minerva_deployment
+cp *.lsf *.yaml /sc/arion/work/cheny69/1216/
+chmod +x *.sh
+```
+
+### 3️⃣ SUBMIT JOBS (Minerva SSH)
+```
+./submit_jobs_sequential.sh
+```
+
+---
+
+## MONITOR JOBS (Anytime)
+
+```bash
+bjobs                    # See all your jobs
+bjobs -a                 # Include finished jobs
+bjobs -l <JOB_ID>        # Detailed info
+bhist | head -20         # Job history
+```
+
+---
+
+## WHAT YOU'RE RUNNING
+
+**16 Jobs × 10 Seeds = 160 GPU Predictions**
+
+| Category | Jobs | Purpose |
+|----------|------|---------|
+| Monomers | 6 | HER2 variants (ECD/ICD) |
+| Dimers | 2 | Homodimer complexes |
+| Trastuzumab | 2 | Antibody binding |
+| Pertuzumab | 2 | Antibody binding |
+| Lapatinib | 3 | Kinase inhibitor binding |
+
+**Expected Runtime**: 1-2 weeks total
+
+---
+
+## DOCUMENTATION
+
+| Read When | Document | Time |
+|-----------|----------|------|
+| 👀 First? | START_HERE.md | 5 min |
+| ⚡ Hurry? | QUICK_START.md | 5 min |
+| 🔄 Transfer? | SCP_COMMAND.md | 2 min |
+| 📋 Commands? | EXECUTION_COMMANDS.md | 10 min |
+| 📚 Detailed? | README.md | 15 min |
+| 🎯 Jobs? | JOBS_MANIFEST.txt | 20 min |
+
+---
+
+## TROUBLESHOOT
+
+**Job stuck in PEND?**
+```bash
+bjobs -l <JOB_ID> | grep REASON
+bhosts -gpu
+```
+
+**Job erroring?**
+```bash
+tail -f /sc/arion/work/cheny69/1216/err.*
+```
+
+**Need to cancel?**
+```bash
+bkill <JOB_ID>           # Cancel one
+bkill 0                  # Cancel all
+```
+
+---
+
+## RESULTS (When Done)
+
+```bash
+# Check results
+find /sc/arion/work/cheny69/1216/results -name "*_model_*.cif" | wc -l
+# Should show: 160
+
+# Download
+scp cheny69@minerva.hpc.mssm.edu:/sc/arion/work/cheny69/1216/results.tar.gz .
+tar -xzf results.tar.gz
+```
+
+---
+
+## FILE CHECKLIST
+
+**Before Transfer:**
+- [ ] 16 .lsf files ✓
+- [ ] 16 .yaml files ✓
+- [ ] 2 shell scripts ✓
+- [ ] 8 documentation files ✓
+
+**After Transfer to Minerva:**
+- [ ] Copy .lsf and .yaml to 1109/ directory
+- [ ] Make .sh scripts executable
+- [ ] Run submit_jobs_sequential.sh
+- [ ] Verify with `bjobs` (should see 16 jobs)
+
+**Final:**
+- [ ] Wait 1-2 weeks
+- [ ] Download results
+- [ ] Analyze structures
+
+---
+
+## SETTINGS (All Pre-configured ✓)
+
+- Project: acc_DiseaseGeneCell ✓
+- Queue: gpu ✓
+- GPU: 1 per job ✓
+- Memory: 100-200GB ✓
+- Conda: boltz0929 ✓
+- Output: /sc/arion/work/cheny69/1216/results/ ✓
+
+---
+
+## KEY NUMBERS
+
+| Metric | Value |
+|--------|-------|
+| Total jobs | 16 |
+| Seeds per job | 10 |
+| Total predictions | 160 |
+| Expected runtime | 1-2 weeks |
+| Result size | 150-200GB |
+| Compressed size | ~50GB |
+| Documentation files | 8 |
+| Configuration files | 32 |
+| Total files | 41 |
+| Package size | 3.5 MB |
+
+---
+
+## 🎯 GOAL
+
+✅ Submit 16 Boltz jobs to Minerva  
+✅ Get 160 HER2 structure predictions  
+✅ Analyze drug resistance mechanisms  
+✅ Download & analyze results locally  
+
+---
+
+## 💡 REMEMBER
+
+✓ Sequential submission = GPU safe  
+✓ No edits needed = files ready  
+✓ Jobs run in background = disconnect anytime  
+✓ Check status anytime = bjobs command  
+✓ Results in 2 weeks = be patient  
+
+---
+
+**Everything is ready. Just follow the 3 commands above!**
+
+Questions? See: START_HERE.md

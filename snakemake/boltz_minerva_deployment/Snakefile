@@ -1,0 +1,80 @@
+# Snakemake workflow for HER2 Boltz predictions on Minerva
+# This workflow submits boltz prediction jobs sequentially to avoid overloading the GPU environment
+
+# List of all jobs to run (in order)
+JOBS = [
+    # Monomer/ECD predictions
+    "d16",
+    "WT_ECD",
+    "S310F",
+    
+    # Monomer/ICD predictions
+    "WT_ICD",
+    "K753E",
+    "L755S",
+    
+    # Multimer/dimer predictions
+    "WT_dimer",
+    "d16_dimer",
+    
+    # Multimer/drug-binding predictions (trastuzumab)
+    "WT_trastuzumab",
+    "d16_trastuzumab",
+    
+    # Multimer/drug-binding predictions (pertuzumab)
+    "WT_pertuzumab",
+    "S310F_pertuzumab",
+    
+    # Multimer/drug-binding predictions (lapatinib)
+    "WT_lapatinib",
+    "K753E_lapatinib",
+    "L755S_lapatinib",
+]
+
+rule all:
+    input:
+        expand("logs/{job}_completion.txt", job=JOBS)
+
+rule submit_boltz_job:
+    """
+    Submit a single boltz prediction job via bsub command.
+    Each job is submitted sequentially with a wait to ensure GPU isn't overloaded.
+    """
+    params:
+        job_name="{job}",
+        wkdir="/sc/arion/work/cheny69/1216",
+    output:
+        "logs/{job}_completion.txt"
+    log:
+        "logs/{job}.log"
+    shell:
+        """
+        echo "Submitting job: {params.job_name}" > {output}
+        
+        # Submit the LSF job
+        cd {params.wkdir}
+        bsub < {params.job_name}.lsf >> {log} 2>&1
+        
+        # Wait a bit to prevent overwhelming the queue
+        sleep 5
+        
+        echo "Job {params.job_name} submitted at $(date)" >> {output}
+        """
+
+# Optional: Create a summary report rule
+rule create_summary:
+    """Create a summary of all submitted jobs"""
+    input:
+        expand("logs/{job}_completion.txt", job=JOBS)
+    output:
+        "JOBS_SUBMITTED_SUMMARY.txt"
+    shell:
+        """
+        echo "=== All Boltz Jobs Submitted ===" > {output}
+        echo "Submission date: $(date)" >> {output}
+        echo "" >> {output}
+        echo "Total jobs: {len(JOBS)}" >> {output}
+        echo "" >> {output}
+        echo "Jobs submitted in order:" >> {output}
+        cat {input} >> {output}
+        """

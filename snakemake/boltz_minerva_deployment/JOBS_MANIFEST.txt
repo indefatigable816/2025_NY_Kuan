@@ -1,0 +1,289 @@
+# HER2 Boltz Jobs Manifest
+
+## Complete Job List (16 jobs × 10 seeds = 160 total GPU predictions)
+
+### Job Execution Order
+
+Jobs are submitted in this order to optimize resource utilization.
+
+---
+
+## CATEGORY 1: MONOMER/ECD PREDICTIONS (3 jobs)
+
+These are simpler, faster predictions for extracellular domain variants.
+
+### Job 1: d16
+- **Full Name**: Delta-16 HER2 isoform (ECD)
+- **Input File**: `d16.yaml` and `d16.lsf`
+- **LSF Config**: 
+  - Memory: 100GB
+  - Array seeds: 1-10
+  - Output directory: `/sc/arion/work/cheny69/1216/results/monomer/ECD/d16/{seed}/`
+- **Est. Runtime**: 4-8 hours per seed
+- **Protein ID in YAML**: `D`
+- **Description**: Truncated HER2 variant lacking exon 16 - a drug-resistant isoform
+- **Research Relevance**: Determines if d16 epitope differs from WT for trastuzumab binding
+
+### Job 2: WT_ECD
+- **Full Name**: Wild-type HER2 Extracellular Domain
+- **Input File**: `WT_ECD.yaml` and `WT_ECD.lsf`
+- **LSF Config**: 
+  - Memory: 100GB
+  - Array seeds: 1-10
+  - Output directory: `/sc/arion/work/cheny69/1216/results/monomer/ECD/WT_ECD/{seed}/`
+- **Est. Runtime**: 4-8 hours per seed
+- **Protein ID in YAML**: `A`
+- **Description**: Reference wild-type HER2 extracellular domain
+- **Research Relevance**: Baseline for comparing drug-binding and mutant variants
+
+### Job 3: S310F
+- **Full Name**: HER2 with S310F mutation (ECD)
+- **Input File**: `S310F.yaml` and `S310F.lsf`
+- **LSF Config**: 
+  - Memory: 100GB
+  - Array seeds: 1-10
+  - Output directory: `/sc/arion/work/cheny69/1216/results/monomer/ECD/S310F/{seed}/`
+- **Est. Runtime**: 4-8 hours per seed
+- **Protein ID in YAML**: `A`
+- **Description**: Point mutation at position 310 (Serine → Phenylalanine)
+- **Research Relevance**: May affect pertuzumab binding or HER2 conformation
+
+---
+
+## CATEGORY 2: MONOMER/ICD PREDICTIONS (3 jobs)
+
+Intracellular domain variants. Slower and more memory-intensive than ECD.
+
+### Job 4: WT_ICD
+- **Full Name**: Wild-type HER2 Intracellular Domain
+- **Input File**: `WT_ICD.yaml` and `WT_ICD.lsf`
+- **LSF Config**: 
+  - Memory: 100GB
+  - Array seeds: 1-10
+  - Output directory: `/sc/arion/work/cheny69/1216/results/monomer/molecule/WT_ICD/{seed}/`
+- **Est. Runtime**: 6-12 hours per seed
+- **Protein ID in YAML**: `A`
+- **Description**: Reference wild-type kinase domain (intracellular)
+- **Research Relevance**: Target for kinase inhibitors (lapatinib, neratinib)
+
+### Job 5: K753E
+- **Full Name**: HER2 with K753E mutation (ICD)
+- **Input File**: `K753E.yaml` and `K753E.lsf`
+- **LSF Config**: 
+  - Memory: 100GB
+  - Array seeds: 1-10
+  - Output directory: `/sc/arion/work/cheny69/1216/results/monomer/molecule/K753E/{seed}/`
+- **Est. Runtime**: 6-12 hours per seed
+- **Protein ID in YAML**: `A`
+- **Description**: Point mutation at position 753 (Lysine → Glutamic acid)
+- **Research Relevance**: May confer kinase inhibitor resistance
+
+### Job 6: L755S
+- **Full Name**: HER2 with L755S mutation (ICD)
+- **Input File**: `L755S.yaml` and `L755S.lsf`
+- **LSF Config**: 
+  - Memory: 100GB
+  - Array seeds: 1-10
+  - Output directory: `/sc/arion/work/cheny69/1216/results/monomer/molecule/L755S/{seed}/`
+- **Est. Runtime**: 6-12 hours per seed
+- **Protein ID in YAML**: `A`
+- **Description**: Point mutation at position 755 (Leucine → Serine)
+- **Research Relevance**: Known lapatinib resistance mutation
+
+---
+
+## CATEGORY 3: MULTIMER/DIMER PREDICTIONS (2 jobs)
+
+Homodimer predictions - moderate complexity.
+
+### Job 7: WT_dimer
+- **Full Name**: Wild-type HER2 Homodimer
+- **Input File**: `WT_dimer.yaml` and `WT_dimer.lsf`
+- **LSF Config**: 
+  - Memory: 200GB
+  - Array seeds: 1-10
+  - Output directory: `/sc/arion/work/cheny69/1216/results/multimer/WT_dimer/{seed}/`
+- **Est. Runtime**: 8-16 hours per seed
+- **Protein Components in YAML**: 2× Chain A (HER2)
+- **Description**: Wild-type HER2 forming a homodimer complex
+- **Research Relevance**: HER2 naturally dimerizes; important for receptor activation
+
+### Job 8: d16_dimer
+- **Full Name**: Delta-16 HER2 Homodimer
+- **Input File**: `d16_dimer.yaml` and `d16_dimer.lsf`
+- **LSF Config**: 
+  - Memory: 200GB
+  - Array seeds: 1-10
+  - Output directory: `/sc/arion/work/cheny69/1216/results/multimer/d16_dimer/{seed}/`
+- **Est. Runtime**: 8-16 hours per seed
+- **Protein Components in YAML**: 2× Delta-16 HER2
+- **Description**: d16 isoform forming a homodimer
+- **Research Relevance**: Does d16 dimerize normally? How does missing exon-16 affect dimer interface?
+
+---
+
+## CATEGORY 4: DRUG BINDING - TRASTUZUMAB (2 jobs)
+
+Trastuzumab (Herceptin) is a HER2-targeting antibody. These predictions assess binding.
+
+### Job 9: WT_trastuzumab
+- **Full Name**: WT HER2 + Trastuzumab Fab Complex
+- **Input File**: `WT_trastuzumab.yaml` and `WT_trastuzumab.lsf`
+- **LSF Config**: 
+  - Memory: 200GB
+  - Array seeds: 1-10
+  - Output directory: `/sc/arion/work/cheny69/1216/results/multimer/WT_trastuzumab/{seed}/`
+- **Est. Runtime**: 12-24 hours per seed
+- **Protein Components in YAML**: 
+  - Chain A: WT HER2 (full ECD)
+  - Chain B: Trastuzumab Fab (antibody fragment)
+- **Description**: Baseline drug binding complex
+- **Research Relevance**: Reference binding mode; compare with resistant variants
+
+### Job 10: d16_trastuzumab
+- **Full Name**: Delta-16 HER2 + Trastuzumab Fab Complex
+- **Input File**: `d16_trastuzumab.yaml` and `d16_trastuzumab.lsf`
+- **LSF Config**: 
+  - Memory: 200GB
+  - Array seeds: 1-10
+  - Output directory: `/sc/arion/work/cheny69/1216/results/multimer/d16_trastuzumab/{seed}/`
+- **Est. Runtime**: 12-24 hours per seed
+- **Protein Components in YAML**: 
+  - Chain A: d16 HER2
+  - Chain B: Trastuzumab Fab
+- **Description**: Drug binding to resistant variant
+- **Research Relevance**: Does d16 fail to bind trastuzumab? Where is the escape?
+
+---
+
+## CATEGORY 5: DRUG BINDING - PERTUZUMAB (2 jobs)
+
+Pertuzumab (Perjeta) is another HER2-targeting antibody. These assess binding to selected variants.
+
+### Job 11: WT_pertuzumab
+- **Full Name**: WT HER2 + Pertuzumab Fab Complex
+- **Input File**: `WT_pertuzumab.yaml` and `WT_pertuzumab.lsf`
+- **LSF Config**: 
+  - Memory: 200GB
+  - Array seeds: 1-10
+  - Output directory: `/sc/arion/work/cheny69/1216/results/multimer/WT_pertuzumab/{seed}/`
+- **Est. Runtime**: 12-24 hours per seed
+- **Protein Components in YAML**: 
+  - Chain A: WT HER2
+  - Chain B: Pertuzumab Fab
+- **Description**: Reference pertuzumab binding
+- **Research Relevance**: Different epitope from trastuzumab; used as combination therapy
+
+### Job 12: S310F_pertuzumab
+- **Full Name**: S310F HER2 + Pertuzumab Fab Complex
+- **Input File**: `S310F_pertuzumab.yaml` and `S310F_pertuzumab.lsf`
+- **LSF Config**: 
+  - Memory: 200GB
+  - Array seeds: 1-10
+  - Output directory: `/sc/arion/work/cheny69/1216/results/multimer/S310F_pertuzumab/{seed}/`
+- **Est. Runtime**: 12-24 hours per seed
+- **Protein Components in YAML**: 
+  - Chain A: S310F HER2
+  - Chain B: Pertuzumab Fab
+- **Description**: Drug binding to S310F variant
+- **Research Relevance**: Does S310F affect pertuzumab epitope? Potential escape mechanism?
+
+---
+
+## CATEGORY 6: DRUG BINDING - LAPATINIB (3 jobs)
+
+Lapatinib is a small-molecule kinase inhibitor (HER1/HER2). These assess binding to kinase domain variants.
+
+### Job 13: WT_lapatinib
+- **Full Name**: WT HER2 + Lapatinib Complex
+- **Input File**: `WT_lapatinib.yaml` and `WT_lapatinib.lsf`
+- **LSF Config**: 
+  - Memory: 200GB
+  - Array seeds: 1-10
+  - Output directory: `/sc/arion/work/cheny69/1216/results/multimer/WT_lapatinib/{seed}/`
+- **Est. Runtime**: 12-24 hours per seed
+- **Protein Components in YAML**: 
+  - Protein A: WT HER2 (kinase domain)
+  - Ligand B: Lapatinib (small molecule, SMILES provided)
+- **Description**: Reference kinase inhibitor binding
+- **Research Relevance**: Baseline for kinase domain targeting
+
+### Job 14: K753E_lapatinib
+- **Full Name**: K753E HER2 + Lapatinib Complex
+- **Input File**: `K753E_lapatinib.yaml` and `K753E_lapatinib.lsf`
+- **LSF Config**: 
+  - Memory: 200GB
+  - Array seeds: 1-10
+  - Output directory: `/sc/arion/work/cheny69/1216/results/multimer/K753E_lapatinib/{seed}/`
+- **Est. Runtime**: 12-24 hours per seed
+- **Protein Components in YAML**: 
+  - Protein A: K753E HER2
+  - Ligand B: Lapatinib
+- **Description**: Kinase inhibitor binding to K753E variant
+- **Research Relevance**: Does K753E confer lapatinib resistance? Mechanism?
+
+### Job 15: L755S_lapatinib
+- **Full Name**: L755S HER2 + Lapatinib Complex
+- **Input File**: `L755S_lapatinib.yaml` and `L755S_lapatinib.lsf`
+- **LSF Config**: 
+  - Memory: 200GB
+  - Array seeds: 1-10
+  - Output directory: `/sc/arion/work/cheny69/1216/results/multimer/L755S_lapatinib/{seed}/`
+- **Est. Runtime**: 12-24 hours per seed
+- **Protein Components in YAML**: 
+  - Protein A: L755S HER2
+  - Ligand B: Lapatinib
+- **Description**: Kinase inhibitor binding to L755S variant
+- **Research Relevance**: Known resistance mechanism; assess binding disruption
+
+---
+
+## Summary Statistics
+
+| Category | Jobs | Seeds | Total Predictions | Est. Time per Job |
+|----------|------|-------|-------------------|------------------|
+| Monomer/ECD | 3 | 10 | 30 | 4-8h |
+| Monomer/ICD | 3 | 10 | 30 | 6-12h |
+| Homodimers | 2 | 10 | 20 | 8-16h |
+| Trastuzumab | 2 | 10 | 20 | 12-24h |
+| Pertuzumab | 2 | 10 | 20 | 12-24h |
+| Lapatinib | 3 | 10 | 30 | 12-24h |
+| **TOTAL** | **16** | **10** | **160** | **1-2 weeks** |
+
+---
+
+## Output File Locations
+
+After completion, find results at:
+```
+/sc/arion/work/cheny69/1216/results/
+├── monomer/
+│   ├── ECD/
+│   │   ├── d16/1-10/
+│   │   ├── WT_ECD/1-10/
+│   │   └── S310F/1-10/
+│   └── molecule/
+│       ├── WT_ICD/1-10/
+│       ├── K753E/1-10/
+│       └── L755S/1-10/
+└── multimer/
+    ├── WT_dimer/1-10/
+    ├── d16_dimer/1-10/
+    ├── WT_trastuzumab/1-10/
+    ├── d16_trastuzumab/1-10/
+    ├── WT_pertuzumab/1-10/
+    ├── S310F_pertuzumab/1-10/
+    ├── WT_lapatinib/1-10/
+    ├── K753E_lapatinib/1-10/
+    └── L755S_lapatinib/1-10/
+```
+
+Each seed directory contains:
+- `{protein_id}_model_1.cif` - Top predicted structure
+- `confidence_model_1.json` - Confidence metrics (pLDDT, PAE)
+- `plddt_model_1.npz` - Per-residue confidence scores
+- `pae_model_1.npz` - Predicted Aligned Error matrix
+
+---
+
+**Generated**: December 4, 2025
