@@ -262,7 +262,7 @@ Note: The Snakefile is included for reference but the shell scripts are the prim
 ```
 Example from d16.lsf:
 #BSUB -P acc_DiseaseGeneCell        # Project for GPU queue
-#BSUB -J HER2[1-10]                 # Job array: 1-10 seeds
+#BSUB -J HER2[1-20]                 # Job array: 1-10 seeds
 #BSUB -q gpu                        # GPU queue
 #BSUB -R rusage[mem=100000]         # Memory allocation
 #BSUB -W 24:00                      # Wall time (24 hours)

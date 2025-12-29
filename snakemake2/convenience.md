@@ -88,7 +88,7 @@
 
     #!/bin/bash
     #BSUB -P acc_DiseaseGeneCell
-    #BSUB -J HER2[1-10]          # run 10 array jobs, index = 1..10
+    #BSUB -J HER2[1-20]          # run 10 array jobs, index = 1..10
     #BSUB -q gpu
     #BSUB -R rusage[mem=20000]
     #BSUB -R span[hosts=1]
