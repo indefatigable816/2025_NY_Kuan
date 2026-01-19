@@ -1,0 +1,5 @@
+Drug,Mutant/Variant,WT Identifier,Expected Outcome (iPTM),Mechanistic Rationale,Boltz2 iPTM,Boltz2 ΔiPTM,AF3 iPTM,AF3 ΔiPTM
+Trastuzumab,Δ16,WT (n=17),Decrease,Homodimerization impairs antibody binding; reduced interface confidence expected,0.4911,-0.0027,0.346,-0.0524
+Pertuzumab,S310F,WT (n=18),Decrease,Mutation hypothesized to reduce binding stability; lower iPTM expected,0.5237,+0.0755,0.4045,+0.0093
+Lapatinib,L755S,WT (n=20),Decrease,L755S expected to disrupt kinase domain; lower interface confidence expected,0.9613,+0.3018,N/A,N/A
+Lapatinib,K753E,WT (n=20),Decrease,K753E expected to disrupt kinase domain; lower interface confidence expected,0.9634,+0.3039,N/A,N/A
